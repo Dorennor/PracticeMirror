@@ -1,4 +1,4 @@
-﻿namespace Dorennor.PracticeMirror.Practice.Lobby
+﻿namespace Assets.Practice.Lobby.Scripts
 {
     public static class ActionMapNames
     {

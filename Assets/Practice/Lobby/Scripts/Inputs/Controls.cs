@@ -5,15 +5,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using Object = UnityEngine.Object;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby.Inputs
+namespace Assets.Practice.Lobby.Scripts.Inputs
 {
-    public class @Controls : IInputActionCollection, IDisposable
+    public class Controls : IInputActionCollection, IDisposable
     {
-        public InputActionAsset asset { get; }
-        public @Controls()
+        public InputActionAsset Asset { get; }
+
+        public Controls()
         {
-            asset = InputActionAsset.FromJson(@"{
+            Asset = InputActionAsset.FromJson(@"{
     ""name"": ""Controls"",
     ""maps"": [
         {
@@ -127,38 +129,38 @@ namespace Dorennor.PracticeMirror.Practice.Lobby.Inputs
     ]
 }");
             // Player
-            m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            _mPlayer = Asset.FindActionMap("Player", throwIfNotFound: true);
+            _mPlayerLook = _mPlayer.FindAction("Look", throwIfNotFound: true);
+            _mPlayerMove = _mPlayer.FindAction("Move", throwIfNotFound: true);
         }
 
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(asset);
+            Object.Destroy(Asset);
         }
 
         public InputBinding? bindingMask
         {
-            get => asset.bindingMask;
-            set => asset.bindingMask = value;
+            get => Asset.bindingMask;
+            set => Asset.bindingMask = value;
         }
 
         public ReadOnlyArray<InputDevice>? devices
         {
-            get => asset.devices;
-            set => asset.devices = value;
+            get => Asset.devices;
+            set => Asset.devices = value;
         }
 
-        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+        public ReadOnlyArray<InputControlScheme> controlSchemes => Asset.controlSchemes;
 
         public bool Contains(InputAction action)
         {
-            return asset.Contains(action);
+            return Asset.Contains(action);
         }
 
         public IEnumerator<InputAction> GetEnumerator()
         {
-            return asset.GetEnumerator();
+            return Asset.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -168,66 +170,95 @@ namespace Dorennor.PracticeMirror.Practice.Lobby.Inputs
 
         public void Enable()
         {
-            asset.Enable();
+            Asset.Enable();
         }
 
         public void Disable()
         {
-            asset.Disable();
+            Asset.Disable();
         }
 
         // Player
-        private readonly InputActionMap m_Player;
-        private IPlayerActions m_PlayerActionsCallbackInterface;
-        private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Move;
+        private readonly InputActionMap _mPlayer;
+
+        private IPlayerActions _mPlayerActionsCallbackInterface;
+        private readonly InputAction _mPlayerLook;
+        private readonly InputAction _mPlayerMove;
+
         public struct PlayerActions
         {
-            private @Controls m_Wrapper;
-            public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @Move => m_Wrapper.m_Player_Move;
-            public InputActionMap Get() { return m_Wrapper.m_Player; }
-            public void Enable() { Get().Enable(); }
-            public void Disable() { Get().Disable(); }
-            public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+            private readonly Controls _mWrapper;
+
+            public PlayerActions(Controls wrapper)
+            {
+                _mWrapper = wrapper;
+            }
+
+            public InputAction Look => _mWrapper._mPlayerLook;
+            public InputAction Move => _mWrapper._mPlayerMove;
+
+            public InputActionMap Get()
+            {
+                return _mWrapper._mPlayer;
+            }
+
+            public void Enable()
+            {
+                Get().Enable();
+            }
+
+            public void Disable()
+            {
+                Get().Disable();
+            }
+
+            public bool Enabled => Get().enabled;
+
+            public static implicit operator InputActionMap(PlayerActions set)
+            {
+                return set.Get();
+            }
+
             public void SetCallbacks(IPlayerActions instance)
             {
-                if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
+                if (_mWrapper._mPlayerActionsCallbackInterface != null)
                 {
-                    @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                    @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                    @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
-                    @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                    @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                    @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                    Look.started -= _mWrapper._mPlayerActionsCallbackInterface.OnLook;
+                    Look.performed -= _mWrapper._mPlayerActionsCallbackInterface.OnLook;
+                    Look.canceled -= _mWrapper._mPlayerActionsCallbackInterface.OnLook;
+                    Move.started -= _mWrapper._mPlayerActionsCallbackInterface.OnMove;
+                    Move.performed -= _mWrapper._mPlayerActionsCallbackInterface.OnMove;
+                    Move.canceled -= _mWrapper._mPlayerActionsCallbackInterface.OnMove;
                 }
-                m_Wrapper.m_PlayerActionsCallbackInterface = instance;
+                _mWrapper._mPlayerActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Look.started += instance.OnLook;
-                    @Look.performed += instance.OnLook;
-                    @Look.canceled += instance.OnLook;
-                    @Move.started += instance.OnMove;
-                    @Move.performed += instance.OnMove;
-                    @Move.canceled += instance.OnMove;
+                    Look.started += instance.OnLook;
+                    Look.performed += instance.OnLook;
+                    Look.canceled += instance.OnLook;
+                    Move.started += instance.OnMove;
+                    Move.performed += instance.OnMove;
+                    Move.canceled += instance.OnMove;
                 }
             }
         }
-        public PlayerActions @Player => new PlayerActions(this);
-        private int m_KeyboardMouseSchemeIndex = -1;
+
+        public PlayerActions Player => new PlayerActions(this);
+        private int _mKeyboardMouseSchemeIndex = -1;
+
         public InputControlScheme KeyboardMouseScheme
         {
             get
             {
-                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard & Mouse");
-                return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+                if (_mKeyboardMouseSchemeIndex == -1) _mKeyboardMouseSchemeIndex = Asset.FindControlSchemeIndex("Keyboard & Mouse");
+                return Asset.controlSchemes[_mKeyboardMouseSchemeIndex];
             }
         }
+
         public interface IPlayerActions
         {
             void OnLook(InputAction.CallbackContext context);
+
             void OnMove(InputAction.CallbackContext context);
         }
     }

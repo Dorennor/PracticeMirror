@@ -1,11 +1,11 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Ownership
+namespace Assets.Practice.Ownership.Scripts
 {
     public class Player : NetworkBehaviour
     {
-        [SerializeField] private Vector3 movement = new Vector3();
+        [SerializeField] private readonly Vector3 _movement = new Vector3();
 
         [Client]
         private void Update()
@@ -28,6 +28,6 @@ namespace Dorennor.PracticeMirror.Practice.Ownership
         }
 
         [ClientRpc]
-        private void RpcMove() => transform.Translate(movement);
+        private void RpcMove() => transform.Translate(_movement);
     }
 }

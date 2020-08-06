@@ -1,64 +1,64 @@
-﻿using Dorennor.PracticeMirror.Practice.Lobby.Inputs;
+﻿using Assets.Practice.Lobby.Scripts.Inputs;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Assets.Practice.Lobby.Scripts
 {
     public class InputManager : MonoBehaviour
     {
-        private static readonly IDictionary<string, int> mapStates = new Dictionary<string, int>();
+        private static readonly IDictionary<string, int> MapStates = new Dictionary<string, int>();
 
-        private static Controls controls;
+        private static Controls _controls;
 
         public static Controls Controls
         {
             get
             {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
+                if (_controls != null) { return _controls; }
+                return _controls = new Controls();
             }
         }
 
         private void Awake()
         {
-            if (controls != null) { return; }
-            controls = new Controls();
+            if (_controls != null) { return; }
+            _controls = new Controls();
         }
 
         private void OnEnable() => Controls.Enable();
 
         private void OnDisable() => Controls.Disable();
 
-        private void OnDestroy() => controls = null;
+        private void OnDestroy() => _controls = null;
 
         public static void Add(string mapName)
         {
-            mapStates.TryGetValue(mapName, out int value);
-            mapStates[mapName] = value + 1;
+            MapStates.TryGetValue(mapName, out int value);
+            MapStates[mapName] = value + 1;
 
             UpdateMapState(mapName);
         }
 
         public static void Remove(string mapName)
         {
-            mapStates.TryGetValue(mapName, out int value);
-            mapStates[mapName] = Mathf.Max(value - 1, 0);
+            MapStates.TryGetValue(mapName, out int value);
+            MapStates[mapName] = Mathf.Max(value - 1, 0);
 
             UpdateMapState(mapName);
         }
 
         private static void UpdateMapState(string mapName)
         {
-            int value = mapStates[mapName];
+            int value = MapStates[mapName];
 
             if (value > 0)
             {
-                Controls.asset.FindActionMap(mapName).Disable();
+                Controls.Asset.FindActionMap(mapName).Disable();
 
                 return;
             }
 
-            Controls.asset.FindActionMap(mapName).Enable();
+            Controls.Asset.FindActionMap(mapName).Enable();
         }
     }
 }

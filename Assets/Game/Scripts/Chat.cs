@@ -1,57 +1,66 @@
-﻿using Mirror;
-using System;
+﻿using System;
+using Mirror;
 using TMPro;
 using UnityEngine;
 
-public class Chat : NetworkBehaviour
+namespace Game.Scripts
 {
-    [SerializeField] private GameObject chatUI = null;
-    [SerializeField] private TMP_Text chatText = null;
-    [SerializeField] private TMP_InputField inputField = null;
-
-    private static event Action<string> OnMessage;
-
-    public override void OnStartAuthority()
+    public class Chat : NetworkBehaviour
     {
-        chatUI.SetActive(true);
+        [Header("UI")]
+        [SerializeField] private GameObject chatUi = null;
 
-        OnMessage += HandleNewMessage;
-    }
+        [SerializeField] private TMP_Text chatText = null;
+        [SerializeField] private TMP_InputField inputField = null;
 
-    [ClientCallback]
-    private void OnDestroy()
-    {
-        if (!hasAuthority) { return; }
+        private static event Action<string> OnMessage;
 
-        OnMessage -= HandleNewMessage;
-    }
+        public override void OnStartAuthority()
+        {
+            OnMessage += HandleNewMessage;
+            Debug.Log("OnStartAuthority");
+        }
 
-    private void HandleNewMessage(string message)
-    {
-        chatText.text += message;
-    }
+        [ClientCallback]
+        private void OnDestroy()
+        {
+            if (!hasAuthority) { return; }
 
-    [Client]
-    public void Send(string message)
-    {
-        if (!Input.GetKeyDown(KeyCode.Return)) { return; }
+            OnMessage -= HandleNewMessage;
+            Debug.Log("OnDestroy");
+        }
 
-        if (string.IsNullOrWhiteSpace(message)) { return; }
+        private void HandleNewMessage(string message)
+        {
+            chatText.text += message;
+            Debug.Log("HandleNewMessage");
+        }
 
-        CmdSendMessage(message);
+        [Client]
+        public void Send(string message)
+        {
+            if (!Input.GetKeyDown(KeyCode.Return)) { return; }
 
-        inputField.text = string.Empty;
-    }
+            if (string.IsNullOrWhiteSpace(message)) { return; }
+            Debug.Log("Send");
 
-    [Command]
-    private void CmdSendMessage(string message)
-    {
-        RpcHandleMessage($"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} | [{connectionToClient.connectionId}]: {message}");
-    }
+            CmdSendMessage(message);
 
-    [ClientRpc]
-    private void RpcHandleMessage(string message)
-    {
-        OnMessage?.Invoke($"\n{message}");
+            inputField.text = string.Empty;
+        }
+
+        [Command]
+        private void CmdSendMessage(string message)
+        {
+            Debug.Log("CmdSendMessage");
+            RpcHandleMessage($"{DateTime.Now.Hour}:{DateTime.Now.Minute}:{DateTime.Now.Second} | [{connectionToClient.connectionId}]: {message}");
+        }
+
+        [ClientRpc]
+        private void RpcHandleMessage(string message)
+        {
+            Debug.Log("RpcHandleMessage");
+            OnMessage?.Invoke($"\n{message}");
+        }
     }
 }

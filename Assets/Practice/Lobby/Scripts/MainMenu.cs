@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Practice.Lobby.Scripts;
+using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Practice.Lobby.Scripts
 {
     public class MainMenu : MonoBehaviour
     {

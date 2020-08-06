@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Practice.Lobby.Scripts
 {
     public class PlayerSpawnPoint : MonoBehaviour
     {

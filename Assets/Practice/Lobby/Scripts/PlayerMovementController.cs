@@ -1,14 +1,14 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Assets.Practice.Lobby.Scripts
 {
     public class PlayerMovementController : NetworkBehaviour
     {
-        [SerializeField] private float movementSpeed = 5f;
-        [SerializeField] private CharacterController controller = null;
+        [SerializeField] private readonly float _movementSpeed = 5f;
+        [SerializeField] private readonly CharacterController _controller = null;
 
-        private Vector2 previousInput;
+        private Vector2 _previousInput;
 
         public override void OnStartAuthority()
         {
@@ -22,22 +22,22 @@ namespace Dorennor.PracticeMirror.Practice.Lobby
         private void Update() => Move();
 
         [Client]
-        private void SetMovement(Vector2 movement) => previousInput = movement;
+        private void SetMovement(Vector2 movement) => _previousInput = movement;
 
         [Client]
-        private void ResetMovement() => previousInput = Vector2.zero;
+        private void ResetMovement() => _previousInput = Vector2.zero;
 
         [Client]
         private void Move()
         {
-            Vector3 right = controller.transform.right;
-            Vector3 forward = controller.transform.forward;
+            Vector3 right = _controller.transform.right;
+            Vector3 forward = _controller.transform.forward;
             right.y = 0f;
             forward.y = 0f;
 
-            Vector3 movement = right.normalized * previousInput.x + forward.normalized * previousInput.y;
+            Vector3 movement = right.normalized * _previousInput.x + forward.normalized * _previousInput.y;
 
-            controller.Move(movement * movementSpeed * Time.deltaTime);
+            _controller.Move(movement * _movementSpeed * Time.deltaTime);
         }
     }
 }

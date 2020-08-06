@@ -1,8 +1,9 @@
-﻿using TMPro;
+﻿using Assets.Practice.Lobby.Scripts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Practice.Lobby.Scripts
 {
     public class JoinLobbyMenu : MonoBehaviour
     {
@@ -28,7 +29,7 @@ namespace Dorennor.PracticeMirror.Practice.Lobby
 
         public void JoinLobby()
         {
-            string ipAddress = ipAddressInputField.text;
+            var ipAddress = ipAddressInputField.text;
 
             networkManager.networkAddress = ipAddress;
             networkManager.StartClient();

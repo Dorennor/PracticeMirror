@@ -3,19 +3,19 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Dorennor.PracticeMirror.Practice.Chat
+namespace Assets.Practice.Chat.Scripts
 {
     public class ChatBehaviour : NetworkBehaviour
     {
-        [SerializeField] private GameObject chatUI = null;
-        [SerializeField] private TMP_Text chatText = null;
-        [SerializeField] private TMP_InputField inputField = null;
+        [SerializeField] private readonly GameObject _chatUi = null;
+        [SerializeField] private readonly TMP_Text _chatText = null;
+        [SerializeField] private readonly TMP_InputField _inputField = null;
 
         private static event Action<string> OnMessage;
 
         public override void OnStartAuthority()
         {
-            chatUI.SetActive(true);
+            _chatUi.SetActive(true);
 
             OnMessage += HandleNewMessage;
         }
@@ -30,7 +30,7 @@ namespace Dorennor.PracticeMirror.Practice.Chat
 
         private void HandleNewMessage(string message)
         {
-            chatText.text += message;
+            _chatText.text += message;
         }
 
         [Client]
@@ -42,7 +42,7 @@ namespace Dorennor.PracticeMirror.Practice.Chat
 
             CmdSendMessage(message);
 
-            inputField.text = string.Empty;
+            _inputField.text = string.Empty;
         }
 
         [Command]

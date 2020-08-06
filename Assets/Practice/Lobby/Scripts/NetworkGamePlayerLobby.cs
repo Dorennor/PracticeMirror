@@ -1,20 +1,20 @@
 ﻿using Mirror;
 
-namespace Dorennor.PracticeMirror.Practice.Lobby
+namespace Practice.Lobby.Scripts
 {
     public class NetworkGamePlayerLobby : NetworkBehaviour
     {
         [SyncVar]
-        private string displayName = "Loading...";
+        private string _displayName = "Loading...";
 
-        private NetworkManagerLobby room;
+        private NetworkManagerLobby _room;
 
         private NetworkManagerLobby Room
         {
             get
             {
-                if (room != null) { return room; }
-                return room = NetworkManager.singleton as NetworkManagerLobby;
+                if (_room != null) { return _room; }
+                return _room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
 
@@ -33,7 +33,7 @@ namespace Dorennor.PracticeMirror.Practice.Lobby
         [Server]
         public void SetDisplayName(string displayName)
         {
-            this.displayName = displayName;
+            _displayName = displayName;
         }
     }
 }
