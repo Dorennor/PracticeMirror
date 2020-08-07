@@ -5,16 +5,16 @@ namespace Practice.Lobby.Scripts
     public class NetworkGamePlayerLobby : NetworkBehaviour
     {
         [SyncVar]
-        private string _displayName = "Loading...";
+        private string displayName = "Loading...";
 
-        private NetworkManagerLobby _room;
+        private NetworkManagerLobby room;
 
         private NetworkManagerLobby Room
         {
             get
             {
-                if (_room != null) { return _room; }
-                return _room = NetworkManager.singleton as NetworkManagerLobby;
+                if (room != null) { return room; }
+                return room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
 
@@ -33,7 +33,7 @@ namespace Practice.Lobby.Scripts
         [Server]
         public void SetDisplayName(string displayName)
         {
-            _displayName = displayName;
+            this.displayName = displayName;
         }
     }
 }

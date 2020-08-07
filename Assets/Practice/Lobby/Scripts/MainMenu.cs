@@ -1,5 +1,4 @@
-﻿using Assets.Practice.Lobby.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Practice.Lobby.Scripts
 {
