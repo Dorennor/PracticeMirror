@@ -1,4 +1,4 @@
-﻿namespace Assets.Practice.Lobby.Scripts
+﻿namespace Practice.Lobby.Scripts
 {
     public static class ActionMapNames
     {

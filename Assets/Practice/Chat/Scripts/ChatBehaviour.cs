@@ -3,19 +3,19 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Practice.Chat.Scripts
+namespace Practice.Chat.Scripts
 {
     public class ChatBehaviour : NetworkBehaviour
     {
-        [SerializeField] private readonly GameObject _chatUi = null;
-        [SerializeField] private readonly TMP_Text _chatText = null;
-        [SerializeField] private readonly TMP_InputField _inputField = null;
+        [SerializeField] private GameObject chatUI = null;
+        [SerializeField] private TMP_Text chatText = null;
+        [SerializeField] private TMP_InputField inputField = null;
 
         private static event Action<string> OnMessage;
 
         public override void OnStartAuthority()
         {
-            _chatUi.SetActive(true);
+            chatUI.SetActive(true);
 
             OnMessage += HandleNewMessage;
         }
@@ -30,7 +30,7 @@ namespace Assets.Practice.Chat.Scripts
 
         private void HandleNewMessage(string message)
         {
-            _chatText.text += message;
+            chatText.text += message;
         }
 
         [Client]
@@ -42,7 +42,7 @@ namespace Assets.Practice.Chat.Scripts
 
             CmdSendMessage(message);
 
-            _inputField.text = string.Empty;
+            inputField.text = string.Empty;
         }
 
         [Command]

@@ -2,17 +2,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Practice.Events.Scripts
+namespace Practice.Events.Scripts
 {
     public class Health : NetworkBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private readonly int _maxHealth = 100;
+        [SerializeField] private int maxHealth = 100;
 
-        [SerializeField] private readonly int _damagePerPress = 10;
+        [SerializeField] private int damagePerPress = 10;
 
         [SyncVar]
-        private int _currentHealth;
+        private int currentHealth;
 
         public delegate void HealthChangedDelegate(int currentHealth, int maxHealth);
 
@@ -23,14 +23,14 @@ namespace Assets.Practice.Events.Scripts
 
         private void SetHealth(int value)
         {
-            _currentHealth = value;
-            EventHealthChanged?.Invoke(_currentHealth, _maxHealth);
+            currentHealth = value;
+            EventHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
-        public override void OnStartServer() => SetHealth(_maxHealth);
+        public override void OnStartServer() => SetHealth(maxHealth);
 
         [Command]
-        private void CmdDealDamage() => SetHealth(Mathf.Max(_currentHealth - _damagePerPress, 0));
+        private void CmdDealDamage() => SetHealth(Mathf.Max(currentHealth - damagePerPress, 0));
 
         #endregion Server
 

@@ -11,9 +11,10 @@ namespace Practice.Lobby.Scripts
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(transform.position, 1f);
+            var position = transform.position;
+            Gizmos.DrawSphere(position, 1f);
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward * 2);
+            Gizmos.DrawLine(position, position + transform.forward * 2);
         }
     }
 }

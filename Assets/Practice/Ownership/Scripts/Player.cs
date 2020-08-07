@@ -1,11 +1,11 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Assets.Practice.Ownership.Scripts
+namespace Practice.Ownership.Scripts
 {
     public class Player : NetworkBehaviour
     {
-        [SerializeField] private readonly Vector3 _movement = new Vector3();
+        [SerializeField] private Vector3 movement = new Vector3();
 
         [Client]
         private void Update()
@@ -28,6 +28,6 @@ namespace Assets.Practice.Ownership.Scripts
         }
 
         [ClientRpc]
-        private void RpcMove() => transform.Translate(_movement);
+        private void RpcMove() => transform.Translate(movement);
     }
 }

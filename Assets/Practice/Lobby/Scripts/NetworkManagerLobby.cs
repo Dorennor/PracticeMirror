@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Practice.Lobby.Scripts;
-using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,23 +9,24 @@ namespace Practice.Lobby.Scripts
 {
     public class NetworkManagerLobby : NetworkManager
     {
-        [SerializeField] private const int MinPlayers = 2;
-        [Scene] [SerializeField] private readonly string _menuScene = string.Empty;
+        [SerializeField] private int minPlayers = 2;
+        [Scene] [SerializeField] private string menuScene = string.Empty;
 
-        [Header("Maps")] [SerializeField] private const int NumberOfRounds = 1;
+        [Header("Maps")]
+        [SerializeField] private int numberOfRounds = 1;
 
-        [SerializeField] private readonly MapSet _mapSet = null;
+        [SerializeField] private MapSet mapSet = null;
 
         [Header("Room")]
-        [SerializeField] private readonly NetworkRoomPlayerLobby _roomPlayerPrefab = null;
+        [SerializeField] private NetworkRoomPlayerLobby roomPlayerPrefab = null;
 
         [Header("Game")]
-        [SerializeField] private readonly NetworkGamePlayerLobby _gamePlayerPrefab = null;
+        [SerializeField] private NetworkGamePlayerLobby gamePlayerPrefab = null;
 
-        //[SerializeField] private readonly GameObject _playerSpawnSystem = null;
-        //[SerializeField] private readonly GameObject _roundSystem = null;
+        [SerializeField] private GameObject playerSpawnSystem = null;
+        [SerializeField] private GameObject roundSystem = null;
 
-        private MapHandler _mapHandler;
+        private MapHandler mapHandler;
 
         public static event Action OnClientConnected;
 
@@ -73,17 +73,20 @@ namespace Practice.Lobby.Scripts
                 return;
             }
 
-            if (SceneManager.GetActiveScene().name == _menuScene) return;
-            conn.Disconnect();
+            if (SceneManager.GetActiveScene().name != menuScene)
+            {
+                conn.Disconnect();
+                return;
+            }
         }
 
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            if (SceneManager.GetActiveScene().name == _menuScene)
+            if (SceneManager.GetActiveScene().name == menuScene)
             {
                 bool isLeader = RoomPlayers.Count == 0;
 
-                NetworkRoomPlayerLobby roomPlayerInstance = Instantiate(_roomPlayerPrefab);
+                NetworkRoomPlayerLobby roomPlayerInstance = Instantiate(roomPlayerPrefab);
 
                 roomPlayerInstance.IsLeader = isLeader;
 
@@ -123,29 +126,37 @@ namespace Practice.Lobby.Scripts
 
         private bool IsReadyToStart()
         {
-            return numPlayers >= MinPlayers && RoomPlayers.All(player => player.isReady);
+            if (numPlayers < minPlayers) { return false; }
+
+            foreach (var player in RoomPlayers)
+            {
+                if (!player.IsReady) { return false; }
+            }
+
+            return true;
         }
 
         public void StartGame()
         {
-            if (SceneManager.GetActiveScene().name != _menuScene) return;
-            if (!IsReadyToStart()) { return; }
+            if (SceneManager.GetActiveScene().name == menuScene)
+            {
+                if (!IsReadyToStart()) { return; }
 
-            _mapHandler = new MapHandler(_mapSet, NumberOfRounds);
+                mapHandler = new MapHandler(mapSet, numberOfRounds);
 
-            ServerChangeScene(_mapHandler.NextMap);
+                ServerChangeScene(mapHandler.NextMap);
+            }
         }
 
         public override void ServerChangeScene(string newSceneName)
         {
-            // From menu to game
-            if (SceneManager.GetActiveScene().name == _menuScene && newSceneName.StartsWith("Scene_Map"))
+            if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith("Scene_Map"))
             {
-                for (var i = RoomPlayers.Count - 1; i >= 0; i--)
+                for (int i = RoomPlayers.Count - 1; i >= 0; i--)
                 {
                     var conn = RoomPlayers[i].connectionToClient;
-                    var gameplayerInstance = Instantiate(_gamePlayerPrefab);
-                    gameplayerInstance.SetDisplayName(RoomPlayers[i].displayName);
+                    var gameplayerInstance = Instantiate(gamePlayerPrefab);
+                    gameplayerInstance.SetDisplayName(RoomPlayers[i].DisplayName);
 
                     NetworkServer.Destroy(conn.identity.gameObject);
 
@@ -156,17 +167,17 @@ namespace Practice.Lobby.Scripts
             base.ServerChangeScene(newSceneName);
         }
 
-        //public override void OnServerSceneChanged(string sceneName)
-        //{
-        //    if (sceneName.StartsWith("Scene_Map"))
-        //    {
-        //        GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
-        //        NetworkServer.Spawn(playerSpawnSystemInstance);
+        public override void OnServerSceneChanged(string sceneName)
+        {
+            if (sceneName.StartsWith("Scene_Map"))
+            {
+                GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
+                NetworkServer.Spawn(playerSpawnSystemInstance);
 
-        //        GameObject roundSystemInstance = Instantiate(_roundSystem);
-        //        NetworkServer.Spawn(roundSystemInstance);
-        //    }
-        //}
+                GameObject roundSystemInstance = Instantiate(roundSystem);
+                NetworkServer.Spawn(roundSystemInstance);
+            }
+        }
 
         public override void OnServerReady(NetworkConnection conn)
         {

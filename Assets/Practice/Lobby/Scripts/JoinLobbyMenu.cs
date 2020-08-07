@@ -1,5 +1,4 @@
-﻿using Assets.Practice.Lobby.Scripts;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +28,7 @@ namespace Practice.Lobby.Scripts
 
         public void JoinLobby()
         {
-            var ipAddress = ipAddressInputField.text;
+            string ipAddress = ipAddressInputField.text;
 
             networkManager.networkAddress = ipAddress;
             networkManager.StartClient();
