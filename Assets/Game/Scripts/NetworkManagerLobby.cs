@@ -9,7 +9,7 @@ namespace Game.Scripts
 
         [Header("Maps")]
         [SerializeField] private int numberOfRounds = 1;
-        //[SerializeField] private MapSet mapSet = null;
+        [SerializeField] private MapSet mapSet = null;
 
     }
 }
