@@ -1258,8 +1258,8 @@ No ready connection found for setting player controller during InternalAddPlayer
             </test-case>
             <test-case id="2315" name="OnCheckObserverCatchesException" fullname="Mirror.Tests.NetworkIdentityTests.OnCheckObserverCatchesException" methodname="OnCheckObserverCatchesException" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="451762614" result="Passed" start-time="2020-07-30 17:12:52Z" end-time="2020-07-30 17:12:52Z" duration="0.199323" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnCheckObserver:some exception   at Mirror.Tests.NetworkIdentityTests+CheckObserverExceptionNetworkBehaviour.OnCheckObserver (Mirror.NetworkConnection conn) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:161
-  at Mirror.NetworkIdentity.OnCheckObserver (Mirror.NetworkConnection conn) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:757
+              <output><![CDATA[Exception in OnCheckObserver:some exception   at Mirror.Tests.NetworkIdentityTests+CheckObserverExceptionNetworkBehaviour.OnCheckObserver (Mirror.NetworkConnection conn) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:161 
+  at Mirror.NetworkIdentity.OnCheckObserver (Mirror.NetworkConnection conn) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:757 
 ]]></output>
             </test-case>
             <test-case id="2317" name="OnCheckObserverFalse" fullname="Mirror.Tests.NetworkIdentityTests.OnCheckObserverFalse" methodname="OnCheckObserverFalse" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1116309705" result="Passed" start-time="2020-07-30 17:12:52Z" end-time="2020-07-30 17:12:52Z" duration="0.196758" asserts="0">
@@ -1275,8 +1275,8 @@ No ready connection found for setting player controller during InternalAddPlayer
             </test-case>
             <test-case id="2323" name="OnNetworkDestroy" fullname="Mirror.Tests.NetworkIdentityTests.OnNetworkDestroy" methodname="OnNetworkDestroy" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="816578235" result="Passed" start-time="2020-07-30 17:12:53Z" end-time="2020-07-30 17:12:53Z" duration="0.197652" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnNetworkDestroy:some exception   at Mirror.Tests.NetworkIdentityTests+NetworkDestroyExceptionNetworkBehaviour.OnStopClient () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:99
-  at Mirror.NetworkIdentity.OnStopClient () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:778
+              <output><![CDATA[Exception in OnNetworkDestroy:some exception   at Mirror.Tests.NetworkIdentityTests+NetworkDestroyExceptionNetworkBehaviour.OnStopClient () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:99 
+  at Mirror.NetworkIdentity.OnStopClient () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:778 
 ]]></output>
             </test-case>
             <test-case id="2319" name="OnSerializeAllSafelyShouldNotLogErrorsForTooManyComponents" fullname="Mirror.Tests.NetworkIdentityTests.OnSerializeAllSafelyShouldNotLogErrorsForTooManyComponents" methodname="OnSerializeAllSafelyShouldNotLogErrorsForTooManyComponents" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="2022151092" result="Passed" start-time="2020-07-30 17:12:53Z" end-time="2020-07-30 17:12:53Z" duration="0.197094" asserts="0">
@@ -1289,26 +1289,26 @@ No ready connection found for setting player controller during InternalAddPlayer
               <output><![CDATA[OnSerialize failed for: object=New Game Object component=Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour sceneId=8835BFE
 
 System.Exception: some exception
-  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnSerialize (Mirror.NetworkWriter writer, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:222
-  at Mirror.NetworkIdentity.OnSerializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkWriter writer, System.Boolean initialState) [0x0001a] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:806
+  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnSerialize (Mirror.NetworkWriter writer, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:222 
+  at Mirror.NetworkIdentity.OnSerializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkWriter writer, System.Boolean initialState) [0x0001a] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:806 
 OnDeserialize failed for: object=New Game Object component=Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour sceneId=8835BFE length=0. Possible Reasons:
-  * Do Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize and OnDeserialize calls write the same amount of data(0 bytes)?
+  * Do Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize and OnDeserialize calls write the same amount of data(0 bytes)? 
   * Was there an exception in Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize/OnDeserialize code?
   * Are the server and client the exact same project?
   * Maybe this OnDeserialize call was meant for another GameObject? The sceneIds can easily get out of sync if the Hierarchy was modified only in the client OR the server. Try rebuilding both.
 
 Exeption System.Exception: some exception
-  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnDeserialize (Mirror.NetworkReader reader, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:226
-  at Mirror.NetworkIdentity.OnDeserializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkReader reader, System.Boolean initialState) [0x0008b] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:947
+  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnDeserialize (Mirror.NetworkReader reader, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:226 
+  at Mirror.NetworkIdentity.OnDeserializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkReader reader, System.Boolean initialState) [0x0008b] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:947 
 OnDeserialize failed for: object=New Game Object component=Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour sceneId=8835BFE length=0. Possible Reasons:
-  * Do Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize and OnDeserialize calls write the same amount of data(0 bytes)?
+  * Do Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize and OnDeserialize calls write the same amount of data(0 bytes)? 
   * Was there an exception in Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour's OnSerialize/OnDeserialize code?
   * Are the server and client the exact same project?
   * Maybe this OnDeserialize call was meant for another GameObject? The sceneIds can easily get out of sync if the Hierarchy was modified only in the client OR the server. Try rebuilding both.
 
 Exeption System.Exception: some exception
-  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnDeserialize (Mirror.NetworkReader reader, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:226
-  at Mirror.NetworkIdentity.OnDeserializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkReader reader, System.Boolean initialState) [0x0008b] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:947
+  at Mirror.Tests.NetworkIdentityTests+SerializeExceptionNetworkBehaviour.OnDeserialize (Mirror.NetworkReader reader, System.Boolean initialState) [0x00001] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:226 
+  at Mirror.NetworkIdentity.OnDeserializeSafely (Mirror.NetworkBehaviour comp, Mirror.NetworkReader reader, System.Boolean initialState) [0x0008b] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:947 
 ]]></output>
             </test-case>
             <test-case id="2352" name="OnSetHostVisibilityBaseTest" fullname="Mirror.Tests.NetworkIdentityTests.OnSetHostVisibilityBaseTest" methodname="OnSetHostVisibilityBaseTest" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1508505457" result="Passed" start-time="2020-07-30 17:12:53Z" end-time="2020-07-30 17:12:54Z" duration="0.188965" asserts="0">
@@ -1316,34 +1316,34 @@ Exeption System.Exception: some exception
             </test-case>
             <test-case id="2313" name="OnSetHostVisibilityCallsComponentsAndCatchesExceptions" fullname="Mirror.Tests.NetworkIdentityTests.OnSetHostVisibilityCallsComponentsAndCatchesExceptions" methodname="OnSetHostVisibilityCallsComponentsAndCatchesExceptions" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="739009428" result="Passed" start-time="2020-07-30 17:12:54Z" end-time="2020-07-30 17:12:54Z" duration="0.198503" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdentityTests+SetHostVisibilityExceptionNetworkBehaviour.OnSetHostVisibility (System.Boolean visible) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:135
-  at Mirror.NetworkIdentity.OnSetHostVisibility (System.Boolean visible) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:738
-Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdentityTests+SetHostVisibilityExceptionNetworkBehaviour.OnSetHostVisibility (System.Boolean visible) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:135
-  at Mirror.NetworkIdentity.OnSetHostVisibility (System.Boolean visible) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:738
+              <output><![CDATA[Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdentityTests+SetHostVisibilityExceptionNetworkBehaviour.OnSetHostVisibility (System.Boolean visible) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:135 
+  at Mirror.NetworkIdentity.OnSetHostVisibility (System.Boolean visible) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:738 
+Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdentityTests+SetHostVisibilityExceptionNetworkBehaviour.OnSetHostVisibility (System.Boolean visible) [0x00016] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:135 
+  at Mirror.NetworkIdentity.OnSetHostVisibility (System.Boolean visible) [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:738 
 ]]></output>
             </test-case>
             <test-case id="2309" name="OnStartAuthorityCallsComponentsAndCatchesExceptions" fullname="Mirror.Tests.NetworkIdentityTests.OnStartAuthorityCallsComponentsAndCatchesExceptions" methodname="OnStartAuthorityCallsComponentsAndCatchesExceptions" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="97428050" result="Passed" start-time="2020-07-30 17:12:54Z" end-time="2020-07-30 17:12:54Z" duration="0.197078" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStartAuthority:some exception   at Mirror.Tests.NetworkIdentityTests+StartAuthorityExceptionNetworkBehaviour.OnStartAuthority () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:51
-  at Mirror.NetworkIdentity.OnStartAuthority () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:703
+              <output><![CDATA[Exception in OnStartAuthority:some exception   at Mirror.Tests.NetworkIdentityTests+StartAuthorityExceptionNetworkBehaviour.OnStartAuthority () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:51 
+  at Mirror.NetworkIdentity.OnStartAuthority () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:703 
 ]]></output>
             </test-case>
             <test-case id="2308" name="OnStartClientCallsComponentsAndCatchesExceptions" fullname="Mirror.Tests.NetworkIdentityTests.OnStartClientCallsComponentsAndCatchesExceptions" methodname="OnStartClientCallsComponentsAndCatchesExceptions" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="225845434" result="Passed" start-time="2020-07-30 17:12:54Z" end-time="2020-07-30 17:12:54Z" duration="0.198550" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStartClient:some exception   at Mirror.Tests.NetworkIdentityTests+StartClientExceptionNetworkBehaviour.OnStartClient () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:41
-  at Mirror.NetworkIdentity.OnStartClient () [0x0007d] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:648
+              <output><![CDATA[Exception in OnStartClient:some exception   at Mirror.Tests.NetworkIdentityTests+StartClientExceptionNetworkBehaviour.OnStartClient () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:41 
+  at Mirror.NetworkIdentity.OnStartClient () [0x0007d] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:648 
 ]]></output>
             </test-case>
             <test-case id="2322" name="OnStartLocalPlayer" fullname="Mirror.Tests.NetworkIdentityTests.OnStartLocalPlayer" methodname="OnStartLocalPlayer" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="75748527" result="Passed" start-time="2020-07-30 17:12:54Z" end-time="2020-07-30 17:12:54Z" duration="0.195832" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStartLocalPlayer:some exception   at Mirror.Tests.NetworkIdentityTests+StartLocalPlayerExceptionNetworkBehaviour.OnStartLocalPlayer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:83
-  at Mirror.NetworkIdentity.OnStartLocalPlayer () [0x0002a] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:673
+              <output><![CDATA[Exception in OnStartLocalPlayer:some exception   at Mirror.Tests.NetworkIdentityTests+StartLocalPlayerExceptionNetworkBehaviour.OnStartLocalPlayer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:83 
+  at Mirror.NetworkIdentity.OnStartLocalPlayer () [0x0002a] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:673 
 ]]></output>
             </test-case>
             <test-case id="2307" name="OnStartServerCallsComponentsAndCatchesExceptions" fullname="Mirror.Tests.NetworkIdentityTests.OnStartServerCallsComponentsAndCatchesExceptions" methodname="OnStartServerCallsComponentsAndCatchesExceptions" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="214877433" result="Passed" start-time="2020-07-30 17:12:54Z" end-time="2020-07-30 17:12:55Z" duration="0.197794" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStartServer:some exception   at Mirror.Tests.NetworkIdentityTests+StartServerExceptionNetworkBehaviour.OnStartServer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:31
-  at Mirror.NetworkIdentity.OnStartServer () [0x000da] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:599
+              <output><![CDATA[Exception in OnStartServer:some exception   at Mirror.Tests.NetworkIdentityTests+StartServerExceptionNetworkBehaviour.OnStartServer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:31 
+  at Mirror.NetworkIdentity.OnStartServer () [0x000da] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:599 
 ]]></output>
             </test-case>
             <test-case id="2314" name="OnStartServerInHostModeSetsIsClientTrue" fullname="Mirror.Tests.NetworkIdentityTests.OnStartServerInHostModeSetsIsClientTrue" methodname="OnStartServerInHostModeSetsIsClientTrue" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="763581525" result="Passed" start-time="2020-07-30 17:12:55Z" end-time="2020-07-30 17:12:55Z" duration="0.196919" asserts="0">
@@ -1354,8 +1354,8 @@ Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdenti
             </test-case>
             <test-case id="2310" name="OnStopAuthorityCallsComponentsAndCatchesExceptions" fullname="Mirror.Tests.NetworkIdentityTests.OnStopAuthorityCallsComponentsAndCatchesExceptions" methodname="OnStopAuthorityCallsComponentsAndCatchesExceptions" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1781156153" result="Passed" start-time="2020-07-30 17:12:55Z" end-time="2020-07-30 17:12:55Z" duration="0.199702" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStopAuthority:some exception   at Mirror.Tests.NetworkIdentityTests+StopAuthorityExceptionNetworkBehaviour.OnStopAuthority () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:67
-  at Mirror.NetworkIdentity.OnStopAuthority () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:723
+              <output><![CDATA[Exception in OnStopAuthority:some exception   at Mirror.Tests.NetworkIdentityTests+StopAuthorityExceptionNetworkBehaviour.OnStopAuthority () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:67 
+  at Mirror.NetworkIdentity.OnStopAuthority () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:723 
 ]]></output>
             </test-case>
             <test-case id="2324" name="OnStopServer" fullname="Mirror.Tests.NetworkIdentityTests.OnStopServer" methodname="OnStopServer" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1943071225" result="Passed" start-time="2020-07-30 17:12:55Z" end-time="2020-07-30 17:12:55Z" duration="0.196455" asserts="0">
@@ -1363,8 +1363,8 @@ Exception in OnSetLocalVisibility:some exception   at Mirror.Tests.NetworkIdenti
             </test-case>
             <test-case id="2325" name="OnStopServerEx" fullname="Mirror.Tests.NetworkIdentityTests.OnStopServerEx" methodname="OnStopServerEx" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1679485467" result="Passed" start-time="2020-07-30 17:12:55Z" end-time="2020-07-30 17:12:56Z" duration="0.199057" asserts="0">
               <properties />
-              <output><![CDATA[Exception in OnStopServer:some exception   at Mirror.Tests.NetworkIdentityTests+StopServerExceptionNetworkBehaviour.OnStopServer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:121
-  at Mirror.NetworkIdentity.OnStopServer () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:619
+              <output><![CDATA[Exception in OnStopServer:some exception   at Mirror.Tests.NetworkIdentityTests+StopServerExceptionNetworkBehaviour.OnStopServer () [0x0000f] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Tests/Editor/NetworkIdentityTests.cs:121 
+  at Mirror.NetworkIdentity.OnStopServer () [0x00013] in /Users/qwerty/x/dev/project_Mirror/Repository/Assets/Mirror/Runtime/NetworkIdentity.cs:619 
 ]]></output>
             </test-case>
             <test-case id="2306" name="OnValidateSetupIDsSetsEmptyAssetIDForSceneObject" fullname="Mirror.Tests.NetworkIdentityTests.OnValidateSetupIDsSetsEmptyAssetIDForSceneObject" methodname="OnValidateSetupIDsSetsEmptyAssetIDForSceneObject" classname="Mirror.Tests.NetworkIdentityTests" runstate="Runnable" seed="1025804145" result="Passed" start-time="2020-07-30 17:12:56Z" end-time="2020-07-30 17:12:56Z" duration="0.197408" asserts="0">
