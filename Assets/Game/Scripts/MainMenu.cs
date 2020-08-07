@@ -1,23 +1,38 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.Scripts
 {
     public class MainMenu : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private GameObject mainMenuPanel;
+        [SerializeField] private GameObject loginPage = null;
+        [SerializeField] private GameObject menuPage = null;
+        [SerializeField] private GameObject joinPage = null;
 
-        [SerializeField] private GameObject landingPagePanel;
+        public void PlayMenu()
+        {
+            menuPage.SetActive(false);
+            joinPage.SetActive(true);
+        }
+
+        public void ChangeName()
+        {
+            menuPage.SetActive(false);
+            loginPage.SetActive(true);
+        }
 
         public void QuitGame()
         {
             #if UNITY_EDITOR
-
                 UnityEditor.EditorApplication.isPlaying = false;
             #else
                 Application.Quit();
             #endif
+        }
+
+        public void EditSettings()
+        {
+
         }
     }
 }
