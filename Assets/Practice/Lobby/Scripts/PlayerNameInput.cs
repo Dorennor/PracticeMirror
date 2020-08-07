@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Practice.Lobby.Scripts
+namespace Assets.Practice.Lobby.Scripts
 {
     public class PlayerNameInput : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private TMP_InputField nameInputField = null;
+        [SerializeField] private readonly TMP_InputField _nameInputField = null;
 
-        [SerializeField] private Button continueButton = null;
+        [SerializeField] private readonly Button _continueButton = null;
 
         public static string DisplayName { get; private set; }
 
@@ -21,21 +21,21 @@ namespace Practice.Lobby.Scripts
         {
             if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)) { return; }
 
-            string defaultName = PlayerPrefs.GetString(PlayerPrefsNameKey);
+            var defaultName = PlayerPrefs.GetString(PlayerPrefsNameKey);
 
-            nameInputField.text = defaultName;
+            _nameInputField.text = defaultName;
 
             SetPlayerName(defaultName);
         }
 
         public void SetPlayerName(string name)
         {
-            continueButton.interactable = !string.IsNullOrEmpty(name);
+            _continueButton.interactable = !string.IsNullOrEmpty(name);
         }
 
         public void SavePlayerName()
         {
-            DisplayName = nameInputField.text;
+            DisplayName = _nameInputField.text;
 
             PlayerPrefs.SetString(PlayerPrefsNameKey, DisplayName);
         }

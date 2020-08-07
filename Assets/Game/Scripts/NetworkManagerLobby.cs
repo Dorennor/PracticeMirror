@@ -18,12 +18,12 @@ namespace Game.Scripts
 
         [Header("Room")] [SerializeField] private NetworkRoomPlayerLobby roomPlayerPrefab = null;
 
-        [Header("Game")] [SerializeField] private NetworkGamePlayerLobbyMenu gamePlayerPrefab = null;
+        [Header("Game")] [SerializeField] private NetworkGamePlayerLobby gamePlayerPrefab = null;
 
-        [SerializeField] private GameObject playerSpawnSystem = null;
-        [SerializeField] private GameObject roundSystem = null;
+        //[SerializeField] private readonly GameObject _playerSpawnSystem = null;
+        //[SerializeField] private readonly GameObject _roundSystem = null;
 
-        private MapHandler mapHandler;
+        private MapHandler _mapHandler;
 
         public static event Action OnClientConnected;
 
@@ -34,7 +34,7 @@ namespace Game.Scripts
         public static event Action OnServerStopped;
 
         public List<NetworkRoomPlayerLobby> RoomPlayers { get; } = new List<NetworkRoomPlayerLobby>();
-        public List<NetworkGamePlayerLobbyMenu> GamePlayers { get; } = new List<NetworkGamePlayerLobbyMenu>();
+        public List<NetworkGamePlayerLobby> GamePlayers { get; } = new List<NetworkGamePlayerLobby>();
 
         public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
 
@@ -129,9 +129,9 @@ namespace Game.Scripts
                 return;
             }
 
-            mapHandler = new MapHandler(mapSet, NumberOfRounds);
+            _mapHandler = new MapHandler(mapSet, NumberOfRounds);
 
-            ServerChangeScene(mapHandler.NextMap);
+            ServerChangeScene(_mapHandler.NextMap);
         }
 
         public override void ServerChangeScene(string newSceneName)
@@ -153,15 +153,17 @@ namespace Game.Scripts
             base.ServerChangeScene(newSceneName);
         }
 
-        public override void OnServerSceneChanged(string sceneName)
-        {
-            if (!sceneName.StartsWith("Scene_Map")) return;
-            var playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
-            NetworkServer.Spawn(playerSpawnSystemInstance);
+        //public override void OnServerSceneChanged(string sceneName)
+        //{
+        //    if (sceneName.StartsWith("Scene_Map"))
+        //    {
+        //        GameObject playerSpawnSystemInstance = Instantiate(_playerSpawnSystem);
+        //        NetworkServer.Spawn(playerSpawnSystemInstance);
 
-            var roundSystemInstance = Instantiate(roundSystem);
-            NetworkServer.Spawn(roundSystemInstance);
-        }
+        //        GameObject roundSystemInstance = Instantiate(_roundSystem);
+        //        NetworkServer.Spawn(roundSystemInstance);
+        //    }
+        //}
 
         public override void OnServerReady(NetworkConnection conn)
         {

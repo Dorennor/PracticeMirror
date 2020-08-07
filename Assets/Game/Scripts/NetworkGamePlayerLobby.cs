@@ -3,7 +3,7 @@ using Mirror;
 
 namespace Game.Scripts
 {
-    public class NetworkGamePlayerLobbyMenu : NetworkBehaviour
+    public class NetworkGamePlayerLobby : NetworkBehaviour
     {
         [SyncVar]
         private string _displayName = "Loading...";

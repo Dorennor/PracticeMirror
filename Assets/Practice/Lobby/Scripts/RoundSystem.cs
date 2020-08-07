@@ -1,27 +1,28 @@
-﻿using Mirror;
-using System.Linq;
+﻿using System.Linq;
+using Assets.Practice.Lobby.Scripts;
+using Mirror;
 using UnityEngine;
 
 namespace Practice.Lobby.Scripts
 {
     public class RoundSystem : NetworkBehaviour
     {
-        [SerializeField] private Animator animator = null;
+        [SerializeField] private readonly Animator _animator = null;
 
-        private NetworkManagerLobby room;
+        private NetworkManagerLobby _room;
 
         private NetworkManagerLobby Room
         {
             get
             {
-                if (room != null) { return room; }
-                return room = NetworkManager.singleton as NetworkManagerLobby;
+                if (_room != null) { return _room; }
+                return _room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
 
         public void CountdownEnded()
         {
-            animator.enabled = false;
+            _animator.enabled = false;
         }
 
         #region Server
@@ -53,7 +54,7 @@ namespace Practice.Lobby.Scripts
         {
             if (Room.GamePlayers.Count(x => x.connectionToClient.isReady) != Room.GamePlayers.Count) { return; }
 
-            animator.enabled = true;
+            _animator.enabled = true;
 
             RpcStartCountdown();
         }
@@ -65,7 +66,7 @@ namespace Practice.Lobby.Scripts
         [ClientRpc]
         private void RpcStartCountdown()
         {
-            animator.enabled = true;
+            _animator.enabled = true;
         }
 
         [ClientRpc]

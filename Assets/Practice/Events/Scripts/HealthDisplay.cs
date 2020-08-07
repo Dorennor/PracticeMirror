@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Practice.Events.Scripts
+namespace Assets.Practice.Events.Scripts
 {
     public class HealthDisplay : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Health health = null;
+        [SerializeField] private readonly Health _health = null;
 
-        [SerializeField] private Image healthBarImage = null;
+        [SerializeField] private readonly Image _healthBarImage = null;
 
         private void OnEnable()
         {
-            health.EventHealthChanged += HandleHealthChanged;
+            _health.EventHealthChanged += HandleHealthChanged;
         }
 
         private void OnDisable()
         {
-            health.EventHealthChanged -= HandleHealthChanged;
+            _health.EventHealthChanged -= HandleHealthChanged;
         }
 
         private void HandleHealthChanged(int currentHealth, int maxHealth)
         {
-            healthBarImage.fillAmount = (float)currentHealth / maxHealth;
+            _healthBarImage.fillAmount = (float)currentHealth / maxHealth;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Mirror;
+﻿using System;
+using System.Linq;
+using Assets.Practice.Lobby.Scripts;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,37 +11,37 @@ namespace Practice.Lobby.Scripts
     public class NetworkRoomPlayerLobby : NetworkBehaviour
     {
         [Header("UI")]
-        [SerializeField] private GameObject lobbyUI = null;
+        [SerializeField] private readonly GameObject _lobbyUi = null;
 
-        [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
-        [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[4];
-        [SerializeField] private Button startGameButton = null;
+        [SerializeField] private readonly TMP_Text[] _playerNameTexts = new TMP_Text[4];
+        [SerializeField] private readonly TMP_Text[] _playerReadyTexts = new TMP_Text[4];
+        [SerializeField] private readonly Button _startGameButton = null;
 
         [SyncVar(hook = nameof(HandleDisplayNameChanged))]
-        public string DisplayName = "Loading...";
+        public string displayName = "Loading...";
 
         [SyncVar(hook = nameof(HandleReadyStatusChanged))]
-        public bool IsReady = false;
+        public bool isReady;
 
-        private bool isLeader;
+        private bool _isLeader;
 
         public bool IsLeader
         {
             set
             {
-                isLeader = value;
-                startGameButton.gameObject.SetActive(value);
+                _isLeader = value;
+                _startGameButton.gameObject.SetActive(value);
             }
         }
 
-        private NetworkManagerLobby room;
+        private NetworkManagerLobby _room;
 
         private NetworkManagerLobby Room
         {
             get
             {
-                if (room != null) { return room; }
-                return room = NetworkManager.singleton as NetworkManagerLobby;
+                if (_room != null) { return _room; }
+                return _room = NetworkManager.singleton as NetworkManagerLobby;
             }
         }
 
@@ -46,7 +49,7 @@ namespace Practice.Lobby.Scripts
         {
             CmdSetDisplayName(PlayerNameInput.DisplayName);
 
-            lobbyUI.SetActive(true);
+            _lobbyUi.SetActive(true);
         }
 
         public override void OnStartClient()
@@ -56,6 +59,7 @@ namespace Practice.Lobby.Scripts
             UpdateDisplay();
         }
 
+        [Obsolete("Override OnStopClient() instead")]
         public override void OnNetworkDestroy()
         {
             Room.RoomPlayers.Remove(this);
@@ -67,32 +71,29 @@ namespace Practice.Lobby.Scripts
 
         public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
 
-        private void UpdateDisplay()
+        public void UpdateDisplay()
         {
             if (!hasAuthority)
             {
-                foreach (var player in Room.RoomPlayers)
+                foreach (var player in Room.RoomPlayers.Where(player => player.hasAuthority))
                 {
-                    if (player.hasAuthority)
-                    {
-                        player.UpdateDisplay();
-                        break;
-                    }
+                    player.UpdateDisplay();
+                    break;
                 }
 
                 return;
             }
 
-            for (int i = 0; i < playerNameTexts.Length; i++)
+            for (int i = 0; i < _playerNameTexts.Length; i++)
             {
-                playerNameTexts[i].text = "Waiting For Player...";
-                playerReadyTexts[i].text = string.Empty;
+                _playerNameTexts[i].text = "Waiting For Player...";
+                _playerReadyTexts[i].text = string.Empty;
             }
 
             for (int i = 0; i < Room.RoomPlayers.Count; i++)
             {
-                playerNameTexts[i].text = Room.RoomPlayers[i].DisplayName;
-                playerReadyTexts[i].text = Room.RoomPlayers[i].IsReady ?
+                _playerNameTexts[i].text = Room.RoomPlayers[i].displayName;
+                _playerReadyTexts[i].text = Room.RoomPlayers[i].isReady ?
                     "<color=green>Ready</color>" :
                     "<color=red>Not Ready</color>";
             }
@@ -100,21 +101,21 @@ namespace Practice.Lobby.Scripts
 
         public void HandleReadyToStart(bool readyToStart)
         {
-            if (!isLeader) { return; }
+            if (!_isLeader) { return; }
 
-            startGameButton.interactable = readyToStart;
+            _startGameButton.interactable = readyToStart;
         }
 
         [Command]
         private void CmdSetDisplayName(string displayName)
         {
-            DisplayName = displayName;
+            this.displayName = displayName;
         }
 
         [Command]
         public void CmdReadyUp()
         {
-            IsReady = !IsReady;
+            isReady = !isReady;
 
             Room.NotifyPlayersOfReadyState();
         }

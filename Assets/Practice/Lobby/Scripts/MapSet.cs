@@ -1,5 +1,5 @@
-﻿using Mirror;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 namespace Practice.Lobby.Scripts
@@ -8,8 +8,8 @@ namespace Practice.Lobby.Scripts
     public class MapSet : ScriptableObject
     {
         [Scene]
-        [SerializeField] private List<string> maps = new List<string>();
+        [SerializeField] private readonly List<string> _maps = new List<string>();
 
-        public IReadOnlyCollection<string> Maps => maps.AsReadOnly();
+        public IReadOnlyCollection<string> Maps => _maps.AsReadOnly();
     }
 }

@@ -1,37 +1,37 @@
-﻿using Cinemachine;
+﻿using Assets.Practice.Lobby.Scripts.Inputs;
+using Cinemachine;
 using Mirror;
-using Practice.Lobby.Scripts.Inputs;
 using UnityEngine;
 
-namespace Practice.Lobby.Scripts
+namespace Assets.Practice.Lobby.Scripts
 {
     public class PlayerCameraController : NetworkBehaviour
     {
         [Header("Camera")]
-        [SerializeField] private Vector2 maxFollowOffset = new Vector2(-1f, 6f);
+        [SerializeField] private readonly Vector2 _maxFollowOffset = new Vector2(-1f, 6f);
 
-        [SerializeField] private Vector2 cameraVelocity = new Vector2(4f, 0.25f);
-        [SerializeField] private Transform playerTransform = null;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
+        [SerializeField] private readonly Vector2 _cameraVelocity = new Vector2(4f, 0.25f);
+        [SerializeField] private readonly Transform _playerTransform = null;
+        [SerializeField] private readonly CinemachineVirtualCamera _virtualCamera = null;
 
-        private Controls controls;
+        private Controls _controls;
 
         private Controls Controls
         {
             get
             {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
+                if (_controls != null) { return _controls; }
+                return _controls = new Controls();
             }
         }
 
-        private CinemachineTransposer transposer;
+        private CinemachineTransposer _transposer;
 
         public override void OnStartAuthority()
         {
-            transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+            _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
 
-            virtualCamera.gameObject.SetActive(true);
+            _virtualCamera.gameObject.SetActive(true);
 
             enabled = true;
 
@@ -48,12 +48,12 @@ namespace Practice.Lobby.Scripts
         {
             float deltaTime = Time.deltaTime;
 
-            transposer.m_FollowOffset.y = Mathf.Clamp(
-                transposer.m_FollowOffset.y - (lookAxis.y * cameraVelocity.y * deltaTime),
-                maxFollowOffset.x,
-                maxFollowOffset.y);
+            _transposer.m_FollowOffset.y = Mathf.Clamp(
+                _transposer.m_FollowOffset.y - (lookAxis.y * _cameraVelocity.y * deltaTime),
+                _maxFollowOffset.x,
+                _maxFollowOffset.y);
 
-            playerTransform.Rotate(0f, lookAxis.x * cameraVelocity.x * deltaTime, 0f);
+            _playerTransform.Rotate(0f, lookAxis.x * _cameraVelocity.x * deltaTime, 0f);
         }
     }
 }

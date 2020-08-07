@@ -1,28 +1,29 @@
-﻿using Mirror;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Practice.Lobby.Scripts;
+using Mirror;
 using UnityEngine;
 
 namespace Practice.Lobby.Scripts
 {
     public class PlayerSpawnSystem : NetworkBehaviour
     {
-        [SerializeField] private GameObject playerPrefab = null;
+        [SerializeField] private readonly GameObject _playerPrefab = null;
 
-        private static List<Transform> spawnPoints = new List<Transform>();
+        private static List<Transform> _spawnPoints = new List<Transform>();
 
-        private int nextIndex = 0;
+        private int _nextIndex;
 
         public static void AddSpawnPoint(Transform transform)
         {
-            spawnPoints.Add(transform);
+            _spawnPoints.Add(transform);
 
-            spawnPoints = spawnPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
+            _spawnPoints = _spawnPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
         }
 
-        public static void RemoveSpawnPoint(Transform transform) => spawnPoints.Remove(transform);
+        public static void RemoveSpawnPoint(Transform transform) => _spawnPoints.Remove(transform);
 
-        public override void OnStartServer() => Game.Scripts.NetworkManagerLobby.OnServerReadied += SpawnPlayer;
+        public override void OnStartServer() => NetworkManagerLobby.OnServerReadied += SpawnPlayer;
 
         public override void OnStartClient()
         {
@@ -31,23 +32,23 @@ namespace Practice.Lobby.Scripts
         }
 
         [ServerCallback]
-        private void OnDestroy() => Game.Scripts.NetworkManagerLobby.OnServerReadied -= SpawnPlayer;
+        private void OnDestroy() => NetworkManagerLobby.OnServerReadied -= SpawnPlayer;
 
         [Server]
         public void SpawnPlayer(NetworkConnection conn)
         {
-            Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
+            Transform spawnPoint = _spawnPoints.ElementAtOrDefault(_nextIndex);
 
             if (spawnPoint == null)
             {
-                Debug.LogError($"Missing spawn point for player {nextIndex}");
+                Debug.LogError($"Missing spawn point for player {_nextIndex}");
                 return;
             }
 
-            GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
+            GameObject playerInstance = Instantiate(_playerPrefab, _spawnPoints[_nextIndex].position, _spawnPoints[_nextIndex].rotation);
             NetworkServer.Spawn(playerInstance, conn);
 
-            nextIndex++;
+            _nextIndex++;
         }
     }
 }

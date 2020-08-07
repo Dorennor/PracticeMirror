@@ -1,25 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Practice.Lobby.Scripts;
+using UnityEngine;
 
 namespace Practice.Lobby.Scripts
 {
     public class MapHandler
     {
-        private readonly IReadOnlyCollection<string> maps;
-        private readonly int numberOfRounds;
+        private readonly IReadOnlyCollection<string> _maps;
+        private readonly int _numberOfRounds;
 
-        private int currentRound;
-        private List<string> remainingMaps;
+        private int _currentRound;
+        private List<string> _remainingMaps;
 
         public MapHandler(MapSet mapSet, int numberOfRounds)
         {
-            maps = mapSet.Maps;
-            this.numberOfRounds = numberOfRounds;
+            _maps = mapSet.Maps;
+            _numberOfRounds = numberOfRounds;
 
             ResetMaps();
         }
 
-        public bool IsComplete => currentRound == numberOfRounds;
+        private bool IsComplete => _currentRound == _numberOfRounds;
 
         public string NextMap
         {
@@ -27,18 +29,18 @@ namespace Practice.Lobby.Scripts
             {
                 if (IsComplete) { return null; }
 
-                currentRound++;
+                _currentRound++;
 
-                if (remainingMaps.Count == 0) { ResetMaps(); }
+                if (_remainingMaps.Count == 0) { ResetMaps(); }
 
-                string map = remainingMaps[UnityEngine.Random.Range(0, remainingMaps.Count)];
+                var map = _remainingMaps[Random.Range(0, _remainingMaps.Count)];
 
-                remainingMaps.Remove(map);
+                _remainingMaps.Remove(map);
 
                 return map;
             }
         }
 
-        private void ResetMaps() => remainingMaps = maps.ToList();
+        private void ResetMaps() => _remainingMaps = _maps.ToList();
     }
 }
